@@ -39,7 +39,7 @@ public class AppUserService implements UserDetailsService {
                 ConfirmationToken confirmationToken = new ConfirmationToken(
                         token,
                         LocalDateTime.now(),
-                        LocalDateTime.now().plusMinutes(10),
+                        LocalDateTime.now().plusMinutes(11),
                         null,
                         appUser
                 );
@@ -61,7 +61,7 @@ public class AppUserService implements UserDetailsService {
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(10),
+                LocalDateTime.now().plusMinutes(11),
                 null,
                 appUser
         );

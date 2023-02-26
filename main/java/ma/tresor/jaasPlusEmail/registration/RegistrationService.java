@@ -28,8 +28,8 @@ public class RegistrationService {
             throw new IllegalStateException("Email not valid");
         }
         String token;
-        Optional<AppUser> user = appUserService.findUser(registration.getEmail());
-        if (user.isEmpty()){
+        Optional<AppUser> userapp = appUserService.findUser(registration.getEmail());
+        if (userapp.isEmpty()){
              token = appUserService.signUp(
                     new AppUser(
                             registration.getFirstName(),
@@ -41,7 +41,7 @@ public class RegistrationService {
         }
         else {
             token = appUserService.signUp(
-                    user.get()
+                    userapp.get()
             );
         }
 
