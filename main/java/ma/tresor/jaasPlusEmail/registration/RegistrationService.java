@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -26,15 +27,24 @@ public class RegistrationService {
         if (!test) {
             throw new IllegalStateException("Email not valid");
         }
+        String token;
+        Optional<AppUser> user = appUserService.findUser(registration.getEmail());
+        if (user.isEmpty()){
+             token = appUserService.signUp(
+                    new AppUser(
+                            registration.getFirstName(),
+                            registration.getLastName(),
+                            registration.getEmail(),
+                            registration.getPassword()
+                    )
+            );
+        }
+        else {
+            token = appUserService.signUp(
+                    user.get()
+            );
+        }
 
-        String token = appUserService.signUp(
-                new AppUser(
-                        registration.getFirstName(),
-                        registration.getLastName(),
-                        registration.getEmail(),
-                        registration.getPassword()
-                )
-        );
 
         String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
         emailSender.send(registration.getEmail(), buildEmail(registration.getFirstName(),

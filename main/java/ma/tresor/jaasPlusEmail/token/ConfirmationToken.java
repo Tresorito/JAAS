@@ -25,9 +25,9 @@ public class ConfirmationToken  {
     private LocalDateTime expiresAt;
     private LocalDateTime confirmAt;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false,
-            name = "appUser_id")
+            name = "appuserId")
     private AppUser appUser;
 
     public ConfirmationToken(String token,

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,7 +39,7 @@ public class AppUserService implements UserDetailsService {
                 ConfirmationToken confirmationToken = new ConfirmationToken(
                         token,
                         LocalDateTime.now(),
-                        LocalDateTime.now().plusMinutes(1),
+                        LocalDateTime.now().plusMinutes(10),
                         null,
                         appUser
                 );
@@ -60,7 +61,7 @@ public class AppUserService implements UserDetailsService {
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(1),
+                LocalDateTime.now().plusMinutes(10),
                 null,
                 appUser
         );
@@ -68,6 +69,10 @@ public class AppUserService implements UserDetailsService {
         tokenService.saveToken(confirmationToken);
 
         return token;
+    }
+
+    public Optional<AppUser> findUser(String email){
+        return appUserReposority.findByEmail(email);
     }
 
 }
